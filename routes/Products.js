@@ -5,7 +5,7 @@ const multer=require('multer')
 const path=require('path')
 
 const storage = multer.diskStorage({
-    destination: 'uploads/', // You'll need to create this folder
+    destination: 'uploads/productImg', // You'll need to create this folder
     filename: (req, file, cb) => {
       cb(null, Date.now() + path.extname(file.originalname));
     },
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 router.post('/product',upload.single('image'),async(req,res)=>{
     const img=req.file.filename
-    const basePath=`${req.protocol}://${req.get('host')}/uploads/`
+    const basePath=`${req.protocol}://${req.get('host')}/uploads/productImg/`
     const product=new Product({
         name:req.body.name,
         price:req.body.price,

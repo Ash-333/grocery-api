@@ -6,6 +6,7 @@ const categoryRoutes=require('./routes/Category')
 const productRoutes=require('./routes/Products')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use('/uploads', express.static('uploads'));
 
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser:true,

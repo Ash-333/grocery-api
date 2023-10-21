@@ -22,23 +22,41 @@ router.post('/product',upload.single('image'),async(req,res)=>{
         category:req.body.category,
         image:`${basePath}${img}`
     })
-    await product.save()
-    res.status(200).json(product)
+    try {
+        await product.save()
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(400).json({msg:`${error}`})
+    }
 })
 
 router.get('/product',async(req,res)=>{
     const product=await Product.find()
-    res.json(product)
+    try {
+        res.json(product)
+    } catch (error) {
+        res.status(400).json({msg:`${error}`})
+    }
 })
 
 router.get('/product/:category',async(req,res)=>{
-    const product=await Product.find({category:req.params.category})
+    const category=req.params.category
+    
+    try {
+        const product=await Product.find({category:req.params.category})
     res.json(product)
+    } catch (error) {
+        res.status(400).json({msg:`${error}`})
+    }
 })
 
 router.get('/product/search',async(req,res)=>{
-    const product=await Product.find({name:{$regex:new RegExp(req.query.q,'i')}})
-    res.status(200).json(product)
+    try {
+        const product=await Product.find({name:{$regex:new RegExp(req.query.q,'i')}})
+        res.status(200).json(product)
+    } catch (err) {
+        res.status(400).json({msg:err})        
+    }
 })
 
 module.exports=router

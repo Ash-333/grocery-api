@@ -4,13 +4,19 @@ const dotenv=require('dotenv').config()
 const mongoose=require('mongoose')
 const categoryRoutes=require('./routes/Category')
 const productRoutes=require('./routes/Products')
+const cartRoutes=require('./routes/Cart')
 const userRoutes=require('./routes/Users')
+const orderRoutes=require('./routes/Order')
 const cors=require('cors')
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/uploads', express.static('uploads'));
 app.use(cors())
+
+app.use((req,res,next)=>{
+    next()
+})
 
 
 mongoose.connect(process.env.MONGO_URL,{
@@ -29,6 +35,8 @@ app.get('/',(req,res)=>{
 app.use('/api',categoryRoutes)
 app.use('/api',productRoutes)
 app.use('/api',userRoutes)
+app.use('/api',cartRoutes)
+app.use('/api',orderRoutes)
 
 app.listen(3000,()=>{
     console.log("server is running at http://localhost:3000")

@@ -4,12 +4,13 @@ const addProduct= async(req,res)=>{
     try {
         if(req.isAdmin){
             const img=req.file.filename
-            const basePath=`${req.protocol}://${req.get('host')}/uploads/productImg/`
+            const basePath=`https://${req.get('host')}/uploads/productImg/`
             const product=new Product({
                 name:req.body.name,
                 price:req.body.price,
                 category:req.body.category,
-                image:`${basePath}${img}`
+                image:`${basePath}${img}`,
+                description:req.body.description
             })
             await product.save()
             res.status(200).json(product)
@@ -65,7 +66,7 @@ const deleteProduct=async (req, res) => {
 }
 
 const getAll=async(req,res)=>{
-    const product=await Product.find()
+    const product=await Product.find().populate('category','name')
     try {
         res.json(product)
     } catch (error) {
@@ -75,7 +76,7 @@ const getAll=async(req,res)=>{
 
 const getByCategory=async(req,res)=>{  
     try {
-        const product=await Product.find({category:req.params.category})
+        const product=await Product.find({category:req.params.category}).populate('category','name')
     res.json(product)
     } catch (error) {
         res.status(400).json({msg:`${error}`})  
@@ -84,7 +85,7 @@ const getByCategory=async(req,res)=>{
 
 const getByName=async(req,res)=>{
     try {
-        const product=await Product.find({name:{$regex:new RegExp(req.query.q,'i')}})
+        const product=await Product.find({name:{$regex:new RegExp(req.query.q,'i')}}).populate('category','name')
         res.status(200).json(product)
     } catch (err) {
         res.status(400).json({msg:err})        

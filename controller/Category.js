@@ -5,7 +5,7 @@ const mongoose=require('mongoose')
 const ObjectId = mongoose.Types.ObjectId;
 
 const addCategory=async(req,res)=>{
-    const basePath=`${req.protocol}://${req.get('host')}/uploads/productImg/`
+    const basePath=`https://${req.get('host')}/uploads/productImg/`
     const img=req.file.filename
     const category=new Category({
         name:req.body.name,

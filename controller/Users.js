@@ -85,7 +85,7 @@ const forgetPassword=async(req,res)=>{
         res.status(500).json({msg:`${error}`})
     }
 }
-//TypeError: resetToken.remove is not a function
+
 
 const resetPassword=async(req,res)=>{
     const {email,token,newPassword}=req.body

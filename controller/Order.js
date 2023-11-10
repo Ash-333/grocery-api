@@ -34,6 +34,21 @@ const getOrderOfUser=async(req,res)=>{
     }
 }
 
+const getOrderById=async(req,res)=>{
+    try {
+        const orderId=req.params.orderId
+        const order=await Order.findOne({ _id: orderId })
+
+        if(!order){
+            res.status(400).json({msg:"no order found"})
+        }
+        
+        res.status(200).json(order)
+    } catch (error) {
+        res.status(500).json({msg:`${error}`})             
+    }
+}
+
 const updateOrderStatus=async(req,res)=>{
     try {
         if(req.isAdmin){
@@ -53,4 +68,4 @@ const updateOrderStatus=async(req,res)=>{
     }
 }
 
-module.exports={createNewOrder,getAllOrder,getOrderOfUser,updateOrderStatus}
+module.exports={createNewOrder,getOrderById,getAllOrder,getOrderOfUser,updateOrderStatus}

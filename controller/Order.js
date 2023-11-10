@@ -21,10 +21,11 @@ const getAllOrder=async(req,res)=>{
 
 const getOrderOfUser=async(req,res)=>{
     try {
-        const userId=req.param.userId
-        const order=await Order.findOne({userId})
+        const userId=req.params.userId
+        const order=await Order.find({userId})
 
         if(!order){
+            res.status(400).json({msg:"no order found"})
         }
         
         res.status(200).json(order)

@@ -1,11 +1,9 @@
-const express=require('express')
 const Category=require('../database/Category')
-const router=express.Router();
 const mongoose=require('mongoose')
 const ObjectId = mongoose.Types.ObjectId;
 
 const addCategory=async(req,res)=>{
-    const basePath=`https://${req.get('host')}/uploads/productImg/`
+    const basePath=`${req.protocol}://${req.get('host')}/uploads/catImg/`
     const img=req.file.filename
     const category=new Category({
         name:req.body.name,

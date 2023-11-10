@@ -4,7 +4,7 @@ const addProduct= async(req,res)=>{
     try {
         if(req.isAdmin){
             const img=req.file.filename
-            const basePath=`https://${req.get('host')}/uploads/productImg/`
+            const basePath=`${req.protocol}://${req.get('host')}/uploads/productImg/`
             const product=new Product({
                 name:req.body.name,
                 price:req.body.price,

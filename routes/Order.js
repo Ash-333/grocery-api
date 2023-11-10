@@ -5,7 +5,7 @@ const {createNewOrder,getAllOrder,getOrderOfUser,updateOrderStatus}=require('../
 
 router.post('/order',auth,createNewOrder)
 router.get('/order',auth,checkAdminStatus,getAllOrder)
-router.get('/order/:id',auth,getOrderOfUser)
-router.put('/order/:id/status',auth,checkAdminStatus,updateOrderStatus)
+router.get('/order/:userId',auth,getOrderOfUser)
+router.put('/order/:userId/status',auth,checkAdminStatus,updateOrderStatus)
 
 module.exports=router

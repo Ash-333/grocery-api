@@ -4,7 +4,6 @@ const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const categoryRoutes = require("./routes/Category");
 const productRoutes = require("./routes/Products");
-const cartRoutes = require("./routes/Cart");
 const userRoutes = require("./routes/Users");
 const orderRoutes = require("./routes/Order");
 const addressRoutes = require("./routes/Address");
@@ -35,7 +34,6 @@ app.get("/", (req, res) => {
 app.use("/api", categoryRoutes);
 app.use("/api", productRoutes);
 app.use("/api", userRoutes);
-app.use("/api", cartRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", addressRoutes);
 

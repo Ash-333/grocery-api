@@ -1,15 +1,19 @@
 const Product=require('../database/Products')
+const fs = require("fs");
+const cloudinary = require("../config/cloudinaryConfig");
 
 const addProduct= async(req,res)=>{
     try {
         if(req.isAdmin){
-            const img=req.file.filename
-            const basePath=`${req.protocol}://${req.get('host')}/uploads/productImg/`
+          const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "productImg",
+          });
+          await fs.unlinkSync(req.file.path);
             const product=new Product({
                 name:req.body.name,
                 price:req.body.price,
                 category:req.body.category,
-                image:`${basePath}${img}`,
+                image:result.secure_url,
                 description:req.body.description
             })
             await product.save()

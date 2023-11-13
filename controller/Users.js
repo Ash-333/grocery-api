@@ -9,7 +9,7 @@ const resetTokenSchema=require('../database/ResetToken.js')
 const sendResetEmail=require('../config/mailer.js')
 
 const signup=async(req,res)=>{
-    const {name,email,isAdmin,password}=req.body
+    const {name,email,isAdmin,password,fcmToken}=req.body
 
     try {
         const user = await User.findOne({email:email})
@@ -24,7 +24,8 @@ const signup=async(req,res)=>{
             name:name,
             email:email,
             isAdmin:isAdmin,
-            password:hashedPW   
+            password:hashedPW,
+            fcmToken:fcmToken   
         })
         await newUser.save()
 

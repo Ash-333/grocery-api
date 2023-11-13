@@ -8,6 +8,7 @@ const addProduct= async(req,res)=>{
           const result = await cloudinary.uploader.upload(req.file.path, {
             folder: "productImg",
           });
+          console.log(result.secure_url)
           await fs.unlinkSync(req.file.path);
             const product=new Product({
                 name:req.body.name,

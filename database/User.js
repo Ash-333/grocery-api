@@ -18,6 +18,10 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         require:true
+    },
+    fcmToken:{
+        type:String,
+        required:true
     }
 })
 

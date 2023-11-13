@@ -1,4 +1,5 @@
 const Order=require('../database/Order')
+const admin=require('../config/firebase')
 
 const createNewOrder=async(req,res)=>{
     try {
@@ -52,12 +53,29 @@ const getOrderById=async(req,res)=>{
 const updateOrderStatus=async(req,res)=>{
     try {
         if(req.isAdmin){
-            const id=req.param
+            const id=req.params._id
             const status=req.body
             const order= await Order.findByAndUpdate(id,{status},{new:true})
             if(!order){
                 return res.status(400).json({msg:'Order not found'})
             }
+
+            const user=await User.findById(order.userId)
+
+            if(!user || !user.fcmToken){
+                return res.status(400).json({msg:'User or FCM token not found'})
+            }
+
+            const fcmMessage={
+                notification:{
+                    title:'Order Status Updated',
+                    body:`Your order is now ${status}`
+                },
+                token:user.fcmToken
+            }
+
+            await admin.messaging().send(fcmMessage)
+
             res.status(200).json(order)
         }
         else{
